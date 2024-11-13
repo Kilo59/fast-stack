@@ -1,0 +1,31 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-yaml
+        args: ["--unsafe"]
+      - id: no-commit-to-branch
+        args: [--branch, develop, --branch, main]
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.7.3"
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
+# https://pre-commit.ci/
+ci:
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit.com hooks
+
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: "main"
+  autoupdate_commit_msg: "[pre-commit.ci] pre-commit autoupdate"
+  autoupdate_schedule: monthly
+  submodules: false
