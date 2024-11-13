@@ -7,16 +7,17 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.115.5"
+fastapi = {version = "^0.115.5", extras = ["standard"]}
 faststream = "^0.5.29"
 fastui = "^0.7.0"
 pydantic = "^2.9.2"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.3"
-ruff = "^0.7.3"
+invoke = "^2.2.0"
 mypy = "^1.13.0"
 pre-commit = "^4.0.1"
+pytest = "^8.3.3"
+ruff = "^0.7.3"
 
 [build-system]
 requires = ["poetry-core"]
