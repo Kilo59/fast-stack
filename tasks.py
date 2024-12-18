@@ -3,7 +3,7 @@ from invoke.tasks import task
 
 
 @task
-def app(ctx: Context, prod: bool = False):
+def app(ctx: Context, prod: bool = False) -> None:
     """
     Run the FastAPI app.
     """
@@ -16,7 +16,9 @@ def app(ctx: Context, prod: bool = False):
 
 
 @task(aliases=["docker"])
-def container(ctx: Context, build: bool = False, run: bool = False, port: int = 8000):
+def container(
+    ctx: Context, build: bool = False, run: bool = False, port: int = 8000
+) -> None:
     """
     Build and run the Docker container.
     """
