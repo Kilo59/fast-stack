@@ -20,7 +20,7 @@ from .forms import router as forms_router
 main_router = APIRouter()
 
 
-@main_router.get('/', response_model=FastUI, response_model_exclude_none=True)
+@main_router.get("/", response_model=FastUI, response_model_exclude_none=True)
 def api_index() -> list[AnyComponent]:
     # language=markdown
     markdown = """\
@@ -58,10 +58,12 @@ Authentication is supported via:
 """
     return demo_page(c.Markdown(text=markdown))
 
-@main_router.get('/{path:path}', status_code=404)
+
+@main_router.get("/{path:path}", status_code=404)
 async def api_404():
     # so we don't fall through to the index page
-    return {'message': 'Not Found'}
+    return {"message": "Not Found"}
+
 
 @asynccontextmanager
 async def lifespan(app_: FastAPI):
@@ -69,7 +71,8 @@ async def lifespan(app_: FastAPI):
         app_.state.httpx_client = client
         yield
 
-frontend_reload = '--reload' in sys.argv
+
+frontend_reload = "--reload" in sys.argv
 if frontend_reload:
     # dev_fastapi_app reloads in the browser when the Python source changes
     app = dev_fastapi_app(lifespan=lifespan)
@@ -81,21 +84,21 @@ fastapi_auth_exception_handling(app)
 # app.include_router(components_router, prefix='/api/components')
 # app.include_router(sse_router, prefix='/api/components')
 # app.include_router(table_router, prefix='/api/table')
-app.include_router(forms_router, prefix='/api/forms')
+app.include_router(forms_router, prefix="/api/forms")
 # app.include_router(auth_router, prefix='/api/auth')
-app.include_router(main_router, prefix='/api')
+app.include_router(main_router, prefix="/api")
 
 
-@app.get('/robots.txt', response_class=PlainTextResponse)
+@app.get("/robots.txt", response_class=PlainTextResponse)
 async def robots_txt() -> str:
-    return 'User-agent: *\nAllow: /'
+    return "User-agent: *\nAllow: /"
 
 
-@app.get('/favicon.ico', status_code=404, response_class=PlainTextResponse)
+@app.get("/favicon.ico", status_code=404, response_class=PlainTextResponse)
 async def favicon_ico() -> str:
-    return 'page not found'
+    return "page not found"
 
 
-@app.get('/{path:path}')
+@app.get("/{path:path}")
 async def html_landing() -> HTMLResponse:
-    return HTMLResponse(prebuilt_html(title='FastUI Demo'))
+    return HTMLResponse(prebuilt_html(title="FastUI Demo"))
